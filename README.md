@@ -1,5 +1,16 @@
 # appvueinicial
 
+
+## Run project
+```
+npm run serve
+```
+
+## Install bootstrap in the project
+```
+vue add bootstrap-vue 
+```
+
 ## Project setup
 ```
 npm install
