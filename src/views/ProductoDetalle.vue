@@ -8,19 +8,19 @@
       </b-card-group>
     </b-container>
   </div>
-<!--  Puedo recorrer la coleccion con un vfor, la key me identifica los nodos del arbol
+  <!--  Puedo recorrer la coleccion con un vfor, la key me identifica los nodos del arbol
       (los dos puntos son v-bind) 
       instrumento-item es lo usamos con istrumentoParam de Instrumento.vue
       instrumentoParam declarado en Instrumento.vue
 
       En instrumento-item contengo instrumento-param y le paso el instrumento con todos sus datos
-      -->
+  -->
 </template> 
 
 
 
 <script>
-
+import axios from "axios";
 import Instrumento from "@/components/Instrumento.vue";
 
 export default {
@@ -32,7 +32,7 @@ export default {
 
   mounted() {
     this.getInstrumentos();
-  }, //Constructor de clase - 
+  }, //Constructor de clase -
 
   data() {
     return {
@@ -42,16 +42,16 @@ export default {
   },
 
   methods: {
-    async getInstrumentos() {
-      const res = await fetch("/instrumentos.json");
-      //Llamo a instrumentos.json de public y se lo asigno a res
-      const resJson = await res.json();
-      //transformo a res en json y lo asigno a resjson
-      console.log(resJson);
-      //muestro
-      this.instrumentosData = resJson.instrumentos;
-      //El resJson.instrumentos que los traigo desde el public y lo asigno a instrumentosData
-      //este se convierte en mi coleccion de elementos y se almacenan
+    getInstrumentos() {
+      axios
+        .get("http://localhost:9001/api/v1/instrumentosbd/all")
+        .then(res => {
+          this.instrumentosData = res.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      //
     }
   } //
 };

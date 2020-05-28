@@ -11,6 +11,7 @@
         <b-nav-item href="/">Home</b-nav-item>
         <b-nav-item href="/dondeEstamos">Donde Estamos</b-nav-item>
         <b-nav-item href="/productoDetalle">Productos</b-nav-item>
+        <b-nav-item href="/abmInst">ABMI</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->

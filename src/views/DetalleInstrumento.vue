@@ -4,7 +4,7 @@
       <b-row no-gutters>
         <b-col md="6" >
           <b-card-img 
-            :src="'/images/' +instrumentoParam.imagen"
+            :src="'/images/' +instrumentoEncontrado.imagen"
             alt="Image"
             class="rounded float-center"
             style="width: 435px; height: 450px; "
@@ -17,37 +17,37 @@
             <b-card-body>
               <!-- Titulo Instrumento-->
               <b-list-group-item show variant="info"> 
-                <b-card-title class="text-left" :title="instrumentoParam.instrumento"></b-card-title>
+                <b-card-title class="text-left" :title="instrumentoEncontrado.instrumento"></b-card-title>
               </b-list-group-item>
               <!-- Marca -->
               <b-list-group-item>
                 <b-card-sub-title cclass="text-left">
                   <b>Marca:</b>
-                  {{instrumentoParam.marca}}
+                  {{instrumentoEncontrado.marca}}
                 </b-card-sub-title>
               </b-list-group-item>
               <!-- Modelo -->
               <b-list-group-item>
                 <b-card-sub-title cclass="text-left">
                   <b>Modelo:</b>
-                  {{instrumentoParam.modelo}}
+                  {{instrumentoEncontrado.modelo}}
                 </b-card-sub-title>
               </b-list-group-item>
               <!-- Descripcion -->
               <b-list-group-item>
-                <b-card-text>{{instrumentoParam.descripcion}}</b-card-text>
+                <b-card-text>{{instrumentoEncontrado.descripcion}}</b-card-text>
               </b-list-group-item>
               <!-- Precio producto -->
               <b-list-group-item>
                 <b-card-sub-title class="text-left">
                   <b>Precio: $</b>
-                  {{instrumentoParam.precio}}
+                  {{instrumentoEncontrado.precio}}
                 </b-card-sub-title>
                 <br>
                 <!-- Vendidos -->
                 <b-card-sub-title style="font-size:95%;" class="text-left">
                  <b> Vendidos: 
-                  {{instrumentoParam.cantidadVendida}}</b>
+                  {{instrumentoEncontrado.cantidadVendida}}</b>
                 </b-card-sub-title>
               </b-list-group-item>
               <!-- Costo de envio -->
@@ -56,14 +56,14 @@
                   <b-card-sub-title class="text-left">
                     
                   </b-card-sub-title>
-                  <div style="color: #25ac25" v-if="this.instrumentoParam.costoEnvio === 'G'">
+                  <div style="color: #25ac25" v-if="this.instrumentoEncontrado.costoEnvio === 'G'">
                     <img alt="logo" :src="'/images/camion.png'" />
                     <b>Envío Gratis</b>
                   </div>
 
                   <div
-                    v-else-if="this.instrumentoParam.costoEnvio !== 'G'"
-                  ><b>Costo del Envío: $</b>{{instrumentoParam.costoEnvio}}</div>
+                    v-else-if="this.instrumentoEncontrado.costoEnvio !== 'G'"
+                  ><b>Costo del Envío: $</b>{{instrumentoEncontrado.costoEnvio}}</div>
                 </b-card-sub-title>
               </b-list-group-item>
               <!-- Botones -->
@@ -83,6 +83,7 @@
 
 
 <script>
+import axios from 'axios';
 export default {
   name: "DetalleProducto",
   components: {},
@@ -93,26 +94,20 @@ export default {
 
   data() {
     return {
-      instrumentoParam: []
+      instrumentoEncontrado: []
     };
   },
 
   methods: {
-    async getInstrumentosxId() {
-      const parametroId = this.$route.params.id;
-      //Recupero el parametro - a travez de la ruta, los parametros y el id
-      const res = await fetch("/instrumentos.json");
-      //fetch me trae todos los elementos
-      const resJson = await res.json();
-      //lo convierto en json
+    getInstrumentosxId(){
 
-      this.instrumentoParam = await resJson.instrumentos.find(
-        instrumento => instrumento.id === parametroId
-      ); //Uso find me retorna un objeto (evito [0]) 
-      //
-    }
-  }
-};
+      const parametroId = this.$route.params.id;
+
+      axios .get("http://localhost:9001/api/v1/instrumentosbd/"+parametroId).then((res)=>{this.instrumentoEncontrado = res.data;})     
+      .catch((error)=>{console.log(error);});
+    },
+    },
+  };
 </script>
 
 <style lang=""></style>

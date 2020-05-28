@@ -35,7 +35,13 @@ Vue.use(VueRouter)
     path: '/detalleInstrumento/:id',
     name: 'detalleInstrumento',
     component: () => import('../views/DetalleInstrumento.vue')
-  }
+  },
+    {
+      path: "/abmInst",
+      name: "abmInst",
+      component: () => import("../views/AbmInst.vue"),
+    }
+
 ]
 
 const router = new VueRouter({
